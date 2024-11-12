@@ -15,8 +15,8 @@ data = {
     ],
     'label': ["anxiety", "depression", "ADHD", "OCD", "depression"]
 }
-df = pd.DataFrame(data)
 
+df = pd.DataFrame(data)
 # Split dataset
 X = df['text']
 y = df['label']
@@ -36,8 +36,11 @@ y_pred = model.predict(X_test_tfidf)
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred))
 
-# Sample prediction
-new_text = ["I'm feeling restless and worried all the time."]
-new_text_tfidf = vectorizer.transform(new_text)
-predicted_label = model.predict(new_text_tfidf)
-print("Predicted Mental Health Issue:", predicted_label[0])
+# User input prediction
+while True:
+    user_text = input("Enter a description of how you feel (or type 'exit' to quit): ")
+    if user_text.lower() == 'exit':
+        break
+    user_text_tfidf = vectorizer.transform([user_text])
+    predicted_label = model.predict(user_text_tfidf)
+    print("Predicted Mental Health Issue:", predicted_label[0])
